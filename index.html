@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurea — Fine Art Solar & Light Atelier</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="brand">AUREA <span>ATELIER</span></div>
+        <nav class="nav-links">
+            <button class="nav-btn active" data-page="home">Licht-Radar</button>
+            <button class="nav-btn" data-page="gallery">Inspiration & Galerie</button>
+            <button class="nav-btn" data-page="philosophy">Philosophie</button>
+        </nav>
+    </header>
+
+    <main class="main-container">
+        <section id="page-home" class="page-content active">
+            <div class="hero-split">
+                <div class="hero-text">
+                    <span class="eyebrow">Präzise Lichtplanung für Fotografen</span>
+                    <h1>Die Perfektion des natürlichen Lichts.</h1>
+                    <p class="lead">Erfasse magische Momente in der Golden & Blue Hour. Aurea liefert sekundengenaue Sonnenkurven für deinen nächsten Shot.</p>
+
+                    <div class="search-box">
+                        <input type="text" id="city-input" placeholder="Ort suchen (z. B. Hamburg, Mailand)..." value="Hamburg">
+                        <button id="search-btn" class="btn-primary">Ort wählen</button>
+                        <button id="refresh-btn" class="btn-outline" title="Live-Daten aktualisieren">🔄 Live-Sync</button>
+                    </div>
+                </div>
+
+                <div class="hero-image-wrapper">
+                    <img id="dynamic-hero-img" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" alt="Golden Hour Landschaft">
+                    <div class="image-overlay-badge" id="image-badge">Küstensonne am Strand</div>
+                </div>
+            </div>
+
+            <div class="api-dashboard" id="api-card">
+                <div class="dashboard-header">
+                    <div>
+                        <span class="location-tag">📍 STANDORT</span>
+                        <h2 id="current-location-name">Hamburg, Deutschland</h2>
+                        <span id="coords-display" class="coords-info">53.55° N, 9.99° E</span>
+                    </div>
+                    <div id="phase-badge" class="phase-pill">Initialisiere...</div>
+                </div>
+
+                <div id="loading-state" class="state-box">
+                    <div class="spinner"></div>
+                    <p>Berechne Sonnenkurve & Lichtwinkel...</p>
+                </div>
+
+                <div id="error-state" class="state-box hidden">
+                    <div class="error-card">
+                        <span class="error-icon">⚠️</span>
+                        <h3>Lichtdaten derzeit nicht erreichbar</h3>
+                        <p>Die Sonnen-API antwortet nicht oder der Ort konnte nicht aufgelöst werden.</p>
+                        <button onclick="fetchSunData()" class="btn-primary">Erneut verbinden</button>
+                    </div>
+                </div>
+
+                <div id="data-state" class="state-box hidden">
+                    <div class="metrics-grid">
+                        <div class="metric-card main-highlight">
+                            <span class="m-label">Golden Hour (Abend)</span>
+                            <span class="m-value" id="golden-hour-time">--:--</span>
+                            <span class="m-sub">Beste Weichzeichner-Atmosphäre</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="m-label">Sonnenuntergang</span>
+                            <span class="m-value" id="sunset-time">--:--</span>
+                            <span class="m-sub">Exakter Horizontkontakt</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="m-label">Blue Hour (Dämmerung)</span>
+                            <span class="m-value" id="dusk-time">--:--</span>
+                            <span class="m-sub">Kühle Kontraste & Stadtlichter</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="m-label">Reine Sonnenzeit</span>
+                            <span class="m-value" id="day-length">-- Std</span>
+                            <span class="m-sub">Gesamtes Tageslichtfenster</span>
+                        </div>
+                    </div>
+
+                    <div class="api-meta-bar">
+                        <span>Letzter Abruf: <strong id="update-timestamp">--:--:--</strong></span>
+                        <span class="separator">•</span>
+                        <span>Quelle: Sunrise-Sunset REST Service</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="page-gallery" class="page-content hidden">
+            <div class="hero-text text-center">
+                <span class="eyebrow">Visual Guide</span>
+                <h2>Der Unterschied im Licht</h2>
+                <p class="lead">Sieh selbst, wie Golden Hour und Blue Hour verschiedene Stimmungen in der Fotografie erzeugen.</p>
+            </div>
+            <div class="comparison-gallery" style="display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-top:3rem;">
+                <div class="gallery-card" style="background:white; border:1px solid var(--border-color); border-radius:20px; overflow:hidden;">
+                    <img src="https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?auto=format&fit=crop&w=800&q=80" style="width:100%; height:260px; object-fit:cover;" alt="Golden Hour">
+                    <div style="padding:2rem;">
+                        <span style="background:#FEF0D5; color:#C97A1E; padding:0.3rem 0.8rem; border-radius:20px; font-size:0.8rem; font-weight:600;">Golden Hour</span>
+                        <h3 style="font-family:var(--font-serif); font-size:1.5rem; margin:1rem 0 0.5rem;">Warme Farbtöne & Weiche Schatten</h3>
+                        <p style="color:var(--text-muted); font-size:0.95rem;">Die Sonne steht tief am Horizont. Perfekt für Porträts und Landschaftsaufnahmen.</p>
+                    </div>
+                </div>
+                <div class="gallery-card" style="background:white; border:1px solid var(--border-color); border-radius:20px; overflow:hidden;">
+                    <img src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=800&q=80" style="width:100%; height:260px; object-fit:cover;" alt="Blue Hour">
+                    <div style="padding:2rem;">
+                        <span style="background:#E0F2FE; color:#0369A1; padding:0.3rem 0.8rem; border-radius:20px; font-size:0.8rem; font-weight:600;">Blue Hour</span>
+                        <h3 style="font-family:var(--font-serif); font-size:1.5rem; margin:1rem 0 0.5rem;">Kühle Dämmerung & Stadtlichter</h3>
+                        <p style="color:var(--text-muted); font-size:0.95rem;">Direkt nach dem Sonnenuntergang färbt sich der Himmel tiefblau.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="page-philosophy" class="page-content hidden">
+            <div class="hero-text text-center">
+                <span class="eyebrow">Atelier Philosophie</span>
+                <h2>Natürliches Licht verstehen</h2>
+                <p class="lead">Aurea unterstützt Kreative dabei, im Einklang mit dem natürlichen Tageslauf zu arbeiten.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>Datenquelle: <a href="https://sunrise-sunset.org/api" target="_blank" rel="noopener">Sunrise-Sunset.org API</a> & <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo API</a></p>
+            <p class="disclaimer">Hinweis: Studienprojekt der Kunstschule Wandsbek, keine offizielle Seite.</p>
+        </div>
+    </footer>
+
+    <script>
+        let currentLat = 53.5511, currentLng = 9.9937, currentCity = 'Hamburg, Deutschland';
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
+                btn.classList.add('active');
+                document.getElementById(`page-${btn.dataset.page}`).classList.remove('hidden');
+            });
+        });
+
+        async function searchCity() {
+            const query = document.getElementById('city-input').value.trim();
+            if (!query) return;
+            try {
+                const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=1&language=de&format=json`);
+                const data = await res.json();
+                if (data.results && data.results.length > 0) {
+                    currentLat = data.results[0].latitude;
+                    currentLng = data.results[0].longitude;
+                    currentCity = `${data.results[0].name}, ${data.results[0].country || ''}`;
+                    fetchSunData();
+                } else { alert('Ort nicht gefunden.'); }
+            } catch (err) { alert('Netzwerkfehler.'); }
+        }
+
+        async function fetchSunData() {
+            const loading = document.getElementById('loading-state'), error = document.getElementById('error-state'), data = document.getElementById('data-state');
+            document.getElementById('current-location-name').innerText = currentCity;
+            document.getElementById('coords-display').innerText = `${currentLat.toFixed(2)}° N, ${currentLng.toFixed(2)}° E`;
+            loading.classList.remove('hidden'); error.classList.add('hidden'); data.classList.add('hidden');
+            try {
+                const res = await fetch(`https://api.sunrise-sunset.org/json?lat=${currentLat}&lng=${currentLng}&formatted=0`);
+                if (!res.ok) throw new Error();
+                const json = await res.json(), results = json.results;
+                const sunset = new Date(results.sunset), dusk = new Date(results.civil_twilight_end), golden = new Date(sunset.getTime() - 45 * 60000);
+                const timeOpts = { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Berlin' };
+                document.getElementById('golden-hour-time').innerText = golden.toLocaleTimeString('de-DE', timeOpts) + ' Uhr';
+                document.getElementById('sunset-time').innerText = sunset.toLocaleTimeString('de-DE', timeOpts) + ' Uhr';
+                document.getElementById('dusk-time').innerText = dusk.toLocaleTimeString('de-DE', timeOpts) + ' Uhr';
+                const daySecs = results.day_length, hours = Math.floor(daySecs / 3600), mins = Math.floor((daySecs % 3600) / 60);
+                document.getElementById('day-length').innerText = `${hours}h ${mins}m`;
+                document.getElementById('update-timestamp').innerText = new Date().toLocaleTimeString('de-DE');
+
+                const now = new Date(), badge = document.getElementById('phase-badge');
+                if (now >= golden && now <= sunset) { badge.innerText = '✨ JETZT: Golden Hour!'; document.body.classList.add('is-golden-hour'); }
+                else { badge.innerText = '☀️ Warten auf Golden Hour'; document.body.classList.remove('is-golden-hour'); }
+
+                loading.classList.add('hidden'); data.classList.remove('hidden');
+            } catch (err) { loading.classList.add('hidden'); error.classList.remove('hidden'); }
+        }
+
+        document.getElementById('search-btn').addEventListener('click', searchCity);
+        document.getElementById('refresh-btn').addEventListener('click', fetchSunData);
+        document.getElementById('city-input').addEventListener('keypress', (e) => { if (e.key === 'Enter') searchCity(); });
+        fetchSunData();
+    </script>
+</body>
+</html>
